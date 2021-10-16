@@ -22,12 +22,12 @@ public class Cat {
         System.out.println("There are gav's food and nickname.");
         Cat gav = new Cat();
         gav.eat("kotleta");
-        gav.giveNick("Biba");
+        gav.giveNick("Mitya");
         gav.show();
         System.out.println("There are black's food and nickname.");
         Cat black = new Cat();
         black.eat("fish");
-        black.giveNick("Boba");
+        black.giveNick("Kuzya");
         black.show();
     }
 }
