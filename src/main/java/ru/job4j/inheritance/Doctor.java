@@ -11,11 +11,7 @@ public class Doctor extends Profession{
     }
 
     public String vaccination(boolean vaccina) {
-        if(vaccina) {
-            return "Прививка есть";
-        } else {
-            return "Нужно привиться";
-        }
+        return vaccina ? "Прививка есть" : "Нужно привиться";
     }
 
     public boolean getVaccina() {
