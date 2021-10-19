@@ -10,8 +10,8 @@ public class Doctor extends Profession{
         this.vaccina = vaccina;
     }
 
-    public String Vaccination(boolean vaccinated) {
-        if(vaccinated) {
+    public String vaccination(boolean vaccina) {
+        if(vaccina) {
             return "Прививка есть";
         } else {
             return "Нужно привиться";
