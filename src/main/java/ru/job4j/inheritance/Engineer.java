@@ -5,8 +5,8 @@ public class Engineer extends Profession {
 
     private int year;
 
-    public Engineer(String name, String surname, String education, int birthday, String tool, int year) {
-        super(name, surname, education, birthday);
+    public Engineer(String name, String tool, int year) {
+        super(name);
         this.tool = tool;
         this.year = year;
     }
