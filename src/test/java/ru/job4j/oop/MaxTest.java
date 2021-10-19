@@ -16,7 +16,7 @@ public class MaxTest {
     @Test
     public void testMax1() {
         Max max = new Max();
-        int rsl = max.max(3,8,0);
+        int rsl = max.max(3, 8, 0);
         assertThat(rsl, is(8));
     }
 

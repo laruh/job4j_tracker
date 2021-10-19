@@ -1,12 +1,10 @@
 package ru.job4j.inheritance;
 
-public class Dentist extends Doctor{
+public class Dentist extends Doctor {
     private int teeth;
 
-    public Dentist() {}
-
-    public Dentist(String name, String surname, String education, int birthday, boolean vaccina, int teeth) {
-        super(name, surname, education, birthday, vaccina);
+    public Dentist(String name, String surname, String education, int birthday, boolean vaccine, int teeth) {
+        super(name, surname, education, birthday, vaccine);
         this.teeth = teeth;
     }
 

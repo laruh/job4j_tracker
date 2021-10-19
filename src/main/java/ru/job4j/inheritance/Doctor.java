@@ -1,20 +1,18 @@
 package ru.job4j.inheritance;
 
-public class Doctor extends Profession{
-    private boolean vaccina;
+public class Doctor extends Profession {
+    private boolean vaccine;
 
-    public Doctor() {}
-
-    public Doctor(String name, String surname, String education, int birthday, boolean vaccina) {
+    public Doctor(String name, String surname, String education, int birthday, boolean vaccine) {
         super(name, surname, education, birthday);
-        this.vaccina = vaccina;
+        this.vaccine = vaccine;
     }
 
-    public String vaccination(boolean vaccina) {
-        return vaccina ? "Прививка есть" : "Нужно привиться";
+    public String vaccination(boolean vaccine) {
+        return vaccine ? "Прививка есть" : "Нужно привиться";
     }
 
-    public boolean getVaccina() {
-        return vaccina;
+    public boolean getVaccine() {
+        return vaccine;
     }
 }
