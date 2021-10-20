@@ -9,8 +9,10 @@ public class Profession {
 
     private int birthday;
 
-    public Profession(String name) {
+    public Profession(String name, String surname, String education) {
         this.name = name;
+        this.surname = surname;
+        this.education = education;
     }
 
     public String getName() {

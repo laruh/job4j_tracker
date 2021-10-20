@@ -3,8 +3,8 @@ package ru.job4j.inheritance;
 public class Surgeon extends Doctor {
     private int stamina;
 
-    public Surgeon(String name, boolean vaccine, int stamina) {
-        super(name, vaccine);
+    public Surgeon(String name, String surname, String education, boolean vaccine, int stamina) {
+        super(name, surname, education, vaccine);
         this.stamina = stamina;
     }
 
