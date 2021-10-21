@@ -8,8 +8,7 @@ public class Library {
         Book witcher = new Book("The Witcher", 1340);
         Book[] books = {cleanCode, spiderMan, metro, witcher};
 
-        for (int index = 0; index < books.length; index++) {
-            Book book = books[index];
+        for (Book book : books) {
             System.out.println(book.getName() + " - " + book.getPages());
         }
 
@@ -17,15 +16,13 @@ public class Library {
         Book temp = books[0];
         books[0] = books[3];
         books[3] = temp;
-        for (int index = 0; index < books.length; index++) {
-            Book book = books[index];
+        for (Book book : books) {
             System.out.println(book.getName() + " - " + book.getPages());
         }
 
         System.out.println(System.lineSeparator() + "Show books with name \"Clean code\".");
-        for (int index = 0; index < books.length; index++) {
-            Book book = books[index];
-            if (book.getName().equals("Clean code")) {
+        for (Book book : books) {
+            if ("Clean code".equals(book.getName())) {
                 System.out.println(book.getName() + " - " + book.getPages());
             }
         }
