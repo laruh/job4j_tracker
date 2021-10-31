@@ -49,6 +49,7 @@ public class ValidateInputTest {
                 new String[] {"-58"}
         );
         ValidateInput input = new ValidateInput(out, in);
-        input.askInt("Enter menu:");
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected, is(-58));
     }
 }
