@@ -9,14 +9,12 @@ public class BankService {
     private final Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
-        if (!users.containsKey(user)) {
-            users.put(user, new ArrayList<Account>());
-        }
+        users.putIfAbsent(user, new ArrayList<Account>());
     }
 
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
-        if (!users.get(user).contains(account)) {
+        if (user != null && !users.get(user).contains(account)) {
             users.get(user).add(account);
         }
     }
@@ -31,8 +29,8 @@ public class BankService {
     }
 
     public Account findByRequisite(String passport, String requisite) {
-        if (findByPassport(passport) != null) {
-            User user = findByPassport(passport);
+        User user = findByPassport(passport);
+        if (user != null) {
             for (Account account : users.get(user)) {
                 if (requisite.equals(account.getRequisite())) {
                     return account;
