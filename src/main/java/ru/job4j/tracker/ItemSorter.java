@@ -14,7 +14,7 @@ public class ItemSorter {
         System.out.println(items);
         Collections.sort(items);
         System.out.println(items);
-        Collections.sort(items, Collections.reverseOrder());
+        Collections.sort(items, new SortReverseItem());
         System.out.println(items);
         Collections.sort(items, new SortByNameItem());
         System.out.println(items);

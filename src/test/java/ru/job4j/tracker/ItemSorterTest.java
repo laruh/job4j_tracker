@@ -41,7 +41,7 @@ public class ItemSorterTest {
                 new Item(2, "Laptop"),
                 new Item(1, "Paper")
         );
-        Collections.sort(items, Collections.reverseOrder());
+        Collections.sort(items, new SortReverseItem());
         assertEquals(items, expected);
     }
 
