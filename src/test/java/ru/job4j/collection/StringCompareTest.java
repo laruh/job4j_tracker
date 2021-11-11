@@ -57,4 +57,14 @@ public class StringCompareTest {
         );
         assertThat(rst, lessThan(0));
     }
+
+    @Test
+    public void fifthCharOfLeftLessThanRightShouldBePositive() {
+        StringCompare compare = new StringCompare();
+        int rst = compare.compare(
+                "Petrava",
+                "Patrev"
+        );
+        assertThat(rst, greaterThan(0));
+    }
 }
