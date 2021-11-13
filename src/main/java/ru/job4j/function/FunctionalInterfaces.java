@@ -17,7 +17,7 @@ public class FunctionalInterfaces {
 
         BiPredicate<Integer, String> biPred = (integer, s) -> integer % 2 == 0 || s.length() == 4;
         for (Integer integer : map.keySet()) {
-            System.out.println("Длина значения номер: "
+            System.out.println("Длина значения номер "
                     + integer + " равна 4: " + biPred.test(integer, map.get(integer)));
         }
 
@@ -27,8 +27,7 @@ public class FunctionalInterfaces {
         Consumer<String> con = (s) -> System.out.println(s);
         Function<String, String> func = (strings) -> strings.toUpperCase();
         for (String s : map.values()) {
-            con.accept(s);
-            System.out.println(func.apply(s));
+            con.accept(func.apply(s));
         }
     }
 }
