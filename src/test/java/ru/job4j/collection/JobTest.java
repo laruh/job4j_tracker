@@ -31,7 +31,7 @@ public class JobTest {
                 new Job("Impl task", 0),
                 new Job("Refactoring", 4)
         );
-        List<Job> expected = Arrays.asList(
+        List<Job> expected = List.of(
                 new Job("Impl task", 0),
                 new Job("Fix bug", 1),
                 new Job("Refactoring", 4)
@@ -48,7 +48,7 @@ public class JobTest {
                 new Job("Impl task", 0),
                 new Job("Refactoring", 4)
         );
-        List<Job> expected = Arrays.asList(
+        List<Job> expected = List.of(
                 new Job("Refactoring", 4),
                 new Job("Fix bug", 1),
                 new Job("Impl task", 0)
@@ -64,7 +64,7 @@ public class JobTest {
                 new Job("Impl task", 0),
                 new Job("Refactoring", 4)
         );
-        List<Job> expected = Arrays.asList(
+        List<Job> expected = List.of(
                 new Job("Refactoring", 4),
                 new Job("Impl task", 0),
                 new Job("Fix bug", 1)
@@ -80,7 +80,7 @@ public class JobTest {
                 new Job("Impl task", 0),
                 new Job("Refactoring", 4)
         );
-        List<Job> expected = Arrays.asList(
+        List<Job> expected = List.of(
                 new Job("Fix bug", 1),
                 new Job("Impl task", 0),
                 new Job("Refactoring", 4)
@@ -96,7 +96,7 @@ public class JobTest {
                 new Job("Fix", 0),
                 new Job("Fix", 4)
         );
-        List<Job> expected = Arrays.asList(
+        List<Job> expected = List.of(
                 new Job("Fix", 4),
                 new Job("Fix", 1),
                 new Job("Fix", 0)
@@ -114,7 +114,7 @@ public class JobTest {
                 new Job("Impl task", 1),
                 new Job("Refactoring", 1)
         );
-        List<Job> expected = Arrays.asList(
+        List<Job> expected = List.of(
                 new Job("Refactoring", 1),
                 new Job("Impl task", 1),
                 new Job("Fix bug", 1)
