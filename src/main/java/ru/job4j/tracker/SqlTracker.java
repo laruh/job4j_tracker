@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -54,26 +55,94 @@ public class SqlTracker implements Store, AutoCloseable {
 
     @Override
     public boolean replace(int id, Item item) {
-        return false;
+        boolean rsl = false;
+        try (PreparedStatement statement =
+                     cn.prepareStatement(
+                             String.format("update items set name = ?, created = ? where id = ?"),
+                             Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, item.getName());
+            statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
+            statement.setInt(3, id);
+            statement.execute();
+            rsl = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rsl;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        boolean rsl = false;
+        try (PreparedStatement statement = cn.prepareStatement(
+                String.format("delete from items where id = ?"))) {
+            statement.setInt(1, id);
+            rsl = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rsl;
     }
 
     @Override
     public List<Item> findAll() {
-        return null;
+        List<Item> items = new ArrayList<>();
+        try (PreparedStatement statement = cn.prepareStatement(
+                String.format("select * from items"))) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    items.add(new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            (resultSet.getTimestamp("created").toLocalDateTime())
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 
     @Override
     public List<Item> findByName(String key) {
-        return null;
+        List<Item> items = new ArrayList<>();
+        try (PreparedStatement statement = cn.prepareStatement(
+                String.format("select * from items where items.name = ?"))) {
+            statement.setString(1, key);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    items.add(new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            (resultSet.getTimestamp("created").toLocalDateTime())
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 
     @Override
     public Item findById(int id) {
-        return null;
+        Item item = new Item();
+        try (PreparedStatement statement = cn.prepareStatement(
+                String.format("select * from items where items.id = ?"))) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    item = (new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            (resultSet.getTimestamp("created").toLocalDateTime())
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 }
