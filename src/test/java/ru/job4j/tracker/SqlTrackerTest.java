@@ -1,71 +1,59 @@
 package ru.job4j.tracker;
 
-import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.List;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-@Ignore
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 public class SqlTrackerTest {
-    private SqlTracker tracker;
 
-    @Before
-    public void init() {
-        tracker = new SqlTracker();
-        tracker.init();
+    private static Connection connection;
+
+    @BeforeClass
+    public static void initConnection() {
+        try (InputStream in = SqlTrackerTest.class.getClassLoader()
+                .getResourceAsStream("test.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            connection = DriverManager.getConnection(
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
+
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @AfterClass
+    public static void closeConnection() throws SQLException {
+        connection.close();
+    }
+
+    @After
+    public void wipeTable() throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("delete from items")) {
+            statement.execute();
+        }
     }
 
     @Test
-    public void whenAddThenDelete() {
-        Item item = new Item("test");
-        tracker.add(item);
-        assertTrue(tracker.delete(item.getId()));
-    }
-
-    @Test
-    public void whenFindById() {
-        Item item = new Item("test");
+    public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item = new Item("item");
         tracker.add(item);
         assertThat(tracker.findById(item.getId()), is(item));
-        assertTrue(tracker.delete(item.getId()));
-    }
-
-    @Test
-    public void replace() {
-        Item item = new Item("test");
-        tracker.add(item);
-        Item newItem = new Item("newItem");
-        tracker.replace(item.getId(), newItem);
-        assertEquals("newItem", tracker.findById(item.getId()).getName());
-        assertTrue(tracker.delete(item.getId()));
-    }
-
-    @Test
-    public void findAll() {
-        Item item1 = new Item("item1");
-        Item item2 = new Item("item2");
-        tracker.add(item1);
-        tracker.add(item2);
-        List<Item> rsl = tracker.findAll();
-        for (int i = 0; i < rsl.size(); i++) {
-            assertEquals(String.format("item%d", i + 1), rsl.get(i).getName());
-            assertTrue(tracker.delete(rsl.get(i).getId()));
-        }
-    }
-
-    @Test
-    public void findByName() {
-        Item item = new Item("item");
-        Item item1 = new Item("item");
-        tracker.add(item);
-        tracker.add(item1);
-        List<Item> rsl = tracker.findByName("item");
-        for (int i = 0; i < rsl.size(); i++) {
-            assertEquals("item", rsl.get(i).getName());
-            assertTrue(tracker.delete(rsl.get(i).getId()));
-        }
     }
 }
