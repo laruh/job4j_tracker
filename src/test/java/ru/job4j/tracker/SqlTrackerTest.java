@@ -21,8 +21,15 @@ public class SqlTrackerTest {
     public void whenAddThenDelete() {
         Item item = new Item("test");
         tracker.add(item);
+        assertTrue(tracker.delete(item.getId()));
+    }
+
+    @Test
+    public void whenFindById() {
+        Item item = new Item("test");
+        tracker.add(item);
         assertThat(tracker.findById(item.getId()), is(item));
-        tracker.delete(item.getId());
+        assertTrue(tracker.delete(item.getId()));
     }
 
     @Test
@@ -30,8 +37,9 @@ public class SqlTrackerTest {
         Item item = new Item("test");
         tracker.add(item);
         Item newItem = new Item("newItem");
-        assertTrue(tracker.replace(item.getId(), newItem));
-        tracker.delete(item.getId());
+        tracker.replace(item.getId(), newItem);
+        assertEquals("newItem", tracker.findById(item.getId()).getName());
+        assertTrue(tracker.delete(item.getId()));
     }
 
     @Test
