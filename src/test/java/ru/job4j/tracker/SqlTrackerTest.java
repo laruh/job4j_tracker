@@ -22,7 +22,7 @@ public class SqlTrackerTest {
         Item item = new Item("test");
         tracker.add(item);
         assertThat(tracker.findById(item.getId()), is(item));
-        assertTrue(tracker.delete(item.getId()));
+        tracker.delete(item.getId());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class SqlTrackerTest {
         tracker.add(item);
         Item newItem = new Item("newItem");
         assertTrue(tracker.replace(item.getId(), newItem));
-        assertTrue(tracker.delete(item.getId()));
+        tracker.delete(item.getId());
     }
 
     @Test
