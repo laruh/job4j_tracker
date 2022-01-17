@@ -72,7 +72,8 @@ public class SqlTrackerTest {
         Item item = new Item("test");
         tracker.add(item);
         Item newItem = new Item("newItem");
-        assertTrue(tracker.replace(item.getId(), newItem));
+        tracker.replace(item.getId(), newItem);
+        assertEquals("newItem", tracker.findById(item.getId()).getName());
     }
 
     @Test
@@ -82,10 +83,8 @@ public class SqlTrackerTest {
         Item item2 = new Item("item2");
         tracker.add(item1);
         tracker.add(item2);
-        List<Item> rsl = tracker.findAll();
-        for (int i = 0; i < rsl.size(); i++) {
-            assertEquals(String.format("item%d", i + 1), rsl.get(i).getName());
-        }
+        List<Item> expected = List.of(item1, item2);
+        assertThat(tracker.findAll(), is(expected));
     }
 
     @Test
@@ -95,9 +94,7 @@ public class SqlTrackerTest {
         Item item1 = new Item("item");
         tracker.add(item);
         tracker.add(item1);
-        List<Item> rsl = tracker.findByName("item");
-        for (Item value : rsl) {
-            assertEquals("item", value.getName());
-        }
+        List<Item> expected = List.of(item, item1);
+        assertThat(tracker.findByName("item"), is(expected));
     }
 }
