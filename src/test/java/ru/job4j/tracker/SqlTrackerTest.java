@@ -10,10 +10,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 public class SqlTrackerTest {
 
@@ -55,5 +56,48 @@ public class SqlTrackerTest {
         Item item = new Item("item");
         tracker.add(item);
         assertThat(tracker.findById(item.getId()), is(item));
+    }
+
+    @Test
+    public void whenAddThenDelete() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item = new Item("item");
+        tracker.add(item);
+        assertTrue(tracker.delete(item.getId()));
+    }
+
+    @Test
+    public void whenReplace() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item = new Item("test");
+        tracker.add(item);
+        Item newItem = new Item("newItem");
+        assertTrue(tracker.replace(item.getId(), newItem));
+    }
+
+    @Test
+    public void whenFindAll() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item1 = new Item("item1");
+        Item item2 = new Item("item2");
+        tracker.add(item1);
+        tracker.add(item2);
+        List<Item> rsl = tracker.findAll();
+        for (int i = 0; i < rsl.size(); i++) {
+            assertEquals(String.format("item%d", i + 1), rsl.get(i).getName());
+        }
+    }
+
+    @Test
+    public void whenFindByName() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item = new Item("item");
+        Item item1 = new Item("item");
+        tracker.add(item);
+        tracker.add(item1);
+        List<Item> rsl = tracker.findByName("item");
+        for (Item value : rsl) {
+            assertEquals("item", value.getName());
+        }
     }
 }
