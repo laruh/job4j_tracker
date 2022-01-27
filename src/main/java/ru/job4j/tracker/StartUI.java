@@ -55,8 +55,8 @@ public class StartUI {
             tracker1.add(new Item("name2" + i));
             tracker1.add(new Item("name2" + i));
             tracker1.replace(i, new Item("namename"));
-            tracker1.delete(i+1);
-            tracker1.findById(i+3);
+            tracker1.delete(i + 1);
+            tracker1.findById(i + 3);
             tracker1.findAll();
         }
     }
