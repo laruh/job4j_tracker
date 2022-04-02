@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class HbmTracker implements Store, AutoCloseable {
     public List<Item> findByName(String key) {
         Session session = sf.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from ru.job4j.tracker.Item where name = :paramName");
+        var query = session.createQuery("from ru.job4j.tracker.Item where name = :paramName");
         query.setParameter("paramName", key);
         List<Item> rsl = query.list();
         session.getTransaction().commit();
